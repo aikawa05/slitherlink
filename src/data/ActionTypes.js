@@ -1,6 +1,8 @@
 const ActionTypes = {
   ADD_PROBLEM: 'ADD_PROBLEM',
   INIT_BOARD: 'INIT_BOARD',
+  MOUSE_DOWN_BOARD: 'MOUSE_DOWN_BOARD',
+  MOUSE_MOVE_BOARD: 'MOUSE_MOVE_BOARD',
 };
 
 export default ActionTypes

@@ -15,6 +15,20 @@ const Actions = {
       problem_id,
     });
   },
+  mouseDownBoard(position) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.MOUSE_DOWN_BOARD,
+      x01: position.x01,
+      y01: position.y01
+    });
+  },
+  mouseMoveBoard(position) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.MOUSE_MOVE_BOARD,
+      x01: position.x01,
+      y01: position.y01
+    });
+  },
 };
 
 export default Actions

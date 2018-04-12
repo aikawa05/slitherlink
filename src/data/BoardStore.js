@@ -17,6 +17,11 @@ class BoardStore extends ReduceStore {
     switch (action.type) {
       case ActionTypes.INIT_BOARD:
         return new Board(ProblemStore.getProblem(action.problem_id))
+      case ActionTypes.MOUSE_DOWN_BOARD:
+      case ActionTypes.MOUSE_MOVE_BOARD:
+        var position = state.convertToLinePosition(action.x01, action.y01)
+        state.setLine(position.x, position.y)
+        return state;
       default:
         return state
     }
