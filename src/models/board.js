@@ -1,3 +1,5 @@
+import { List } from 'immutable'
+
 class Board {
   constructor(problem) {
     if (!problem)
@@ -5,56 +7,92 @@ class Board {
       return
     }
     this.problem = problem
-    var _numbers = []
+    var __numbers = []
     for (let i = 0; i < problem.height; i++) {
-      _numbers.push([])
       for (let j = 0; j < problem.width; j++) {
         if (problem.numbers) {
-          _numbers[i][j] = problem.numbers[i * problem.width + j]
+          __numbers.push(problem.numbers[i * problem.width + j])
         }
         else {
-          _numbers[i][j] = Board.EMPTY
+          __numbers.push(Board.EMPTY)
         }
       }
     }
-    var _lines = []
-    for (let i = 0; i < problem.height * 2 + 1; i++) {
-      _lines.push([])
-      for (let j = 0; j < problem.width + 1; j++) {
-        _lines[i][j] = 0
+    var __lines = []
+    for (let i = 0; i < this.lineHeight; i++) {
+      for (let j = 0; j < this.lineWidth; j++) {
+        __lines.push(0)
       }
     }
-    this.getNumber = function(x, y) {
-      return _numbers[y][x]
-    }
-    this.setNumber = function(x, y, n) {
-      _numbers[y][x] = n
-    }
-    this.removeLine = function(x, y) {
-      if (0 <= x && x < _lines[0].length && 0 <= y && y < _lines.length ) {
-        _lines[y][x] = 0
-      }
-    }
-    this.setLine = function(x, y) {
-      if (0 <= x && x < _lines[0].length && 0 <= y && y < _lines.length ) {
-        _lines[y][x] = 1
-      }
-    }
-    this.hasLine = function(x, y) {
-      if (0 <= x && x < _lines[0].length && 0 <= y && y < _lines.length ) {
-        return _lines[y][x] === 1
-      }
-      else {
-        return false
-      }
-    }
+    this._numbers = List(__numbers)
+    this._lines = List(__lines)
   }
 
+  _copy() {
+    var b = new Board()
+    b.problem = this.problem
+    b._numbers = this._numbers
+    b._lines = this._lines
+    return b
+  }
+
+  get inited() {
+    return this.problem != null
+  }
   get width() {
-    return this.problem.width
+    return this.inited ? this.problem.width : 0
   }
   get height() {
-    return this.problem.height
+    return this.inited ? this.problem.height : 0
+  }
+  get lineWidth() {
+    return this.inited ? this.problem.width + 1 : 0
+  }
+  get lineHeight() {
+    return this.inited ? this.problem.height * 2 + 1 : 0
+  }
+  hasAnswerLine(x, y) {
+    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight ) {
+      return this.problem.lines[y * this.lineWidth + x] === 1
+    }
+    else {
+      return false
+    }
+  }
+  numberIndex(x, y) {
+    return y * this.width + x
+  }
+  lineIndex(x, y) {
+    return y * this.lineWidth + x
+  }
+  getNumber(x, y) {
+    return this._numbers.get(this.numberIndex(x, y))
+  }
+  removeLine(x, y) {
+    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight && this._lines.get(this.lineIndex(x, y)) === 1 ) {
+      this._lines = this._lines.set(this.lineIndex(x, y), 0)
+      return this._copy()
+    }
+    else {
+      return this
+    }
+  }
+  setLine(x, y) {
+    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight && this._lines.get(this.lineIndex(x, y)) === 0) {
+      this._lines = this._lines.set(this.lineIndex(x, y), 1)
+      return this._copy()
+    }
+    else {
+      return this
+    }
+  }
+  hasLine(x, y) {
+    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight ) {
+      return this._lines.get(this.lineIndex(x, y)) === 1
+    }
+    else {
+      return false
+    }
   }
 
   convertToLinePosition(x01, y01) {
@@ -64,7 +102,15 @@ class Board {
     var b = Math.ceil(y - x)
     var i = Math.floor(((a + b) / 2.0) * 2.0)
     var j = Math.floor((a - b) / 2.0)
-    if (i % 2 === 1){
+    if (i % 2 === 0)
+    {
+      if (j >= this.width)
+      {
+        j = this.width - 1
+      }
+    }
+    else if (i % 2 == 1)
+    {
       j += 1
     }
     return {x: j, y: i}
