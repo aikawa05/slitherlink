@@ -2,17 +2,23 @@ import ActionTypes from './ActionTypes'
 import AppDispatcher from './AppDispatcher'
 
 const Actions = {
-  addProblem(problem_id, problem_data) {
+  addProblem(problemId, problemData) {
     AppDispatcher.dispatch({
       type: ActionTypes.ADD_PROBLEM,
-      problem_id,
-      problem_data
+      problemId,
+      problemData
     });
   },
-  initBoard(problem_id) {
+  selectProblem(problemId) {
     AppDispatcher.dispatch({
-      type: ActionTypes.INIT_BOARD,
-      problem_id,
+      type: ActionTypes.SELECT_PROBLEM,
+      problemId,
+    });
+  },
+  selectTool(toolName) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.SELECT_TOOL,
+      toolName: toolName,
     });
   },
   mouseDownBoard(position) {

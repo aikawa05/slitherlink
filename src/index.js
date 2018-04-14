@@ -31,6 +31,6 @@ for (let i = 1; i <= 8; i++)
   )
 }
 
-Actions.initBoard(1)
+Actions.selectProblem(1)
 
 ReactDOM.render((<GameContainer />), document.getElementById('root'))

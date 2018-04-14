@@ -16,7 +16,7 @@ class ProblemStore extends ReduceStore {
   reduce(state, action) {
     switch (action.type) {
       case ActionTypes.ADD_PROBLEM:
-        return state.set(action.problem_id, new Problem(action.problem_id, action.problem_data));
+        return state.set(action.problemId, new Problem(action.problemId, action.problemData));
       default:
         return state
     }
