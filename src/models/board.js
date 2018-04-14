@@ -94,6 +94,26 @@ class Board {
       return false
     }
   }
+  countSurroundingLines(x, y) {
+    var m = 0
+    if (this.hasLine(x, 2 * y))
+    {
+      m += 1
+    }
+    if (this.hasLine(x, 2 * y + 1))
+    {
+      m += 1
+    }
+    if (this.hasLine(x, 2 * y + 2))
+    {
+      m += 1
+    }
+    if (this.hasLine(x + 1, 2 * y + 1))
+    {
+      m += 1
+    }
+    return m
+  }
 
   convertToLinePosition(x01, y01) {
     var x = this.width * x01
@@ -109,7 +129,7 @@ class Board {
         j = this.width - 1
       }
     }
-    else if (i % 2 == 1)
+    else if (i % 2 === 1)
     {
       j += 1
     }

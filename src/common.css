@@ -4,7 +4,7 @@ body {
   justify-content: center;
   align-content: center;
   align-items: center;
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
   font-size: 21px;
   background-color: #eeeeee;
 }
@@ -26,10 +26,30 @@ body {
   margin: 5px;
   border-radius: 7px;
   display: inline-block;
-  font-size: 80px;
+  font-size: 90px;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
+}
+
+.celldisabled {
+  color: #666666;
+}
+
+.cell0 {
+  color: #aaaaaa;
+}
+
+.cell1 {
+  color: #148776;
+}
+
+.cell2 {
+  color: #d78111;
+}
+
+.cell3 {
+  color: #d92f44;
 }
 
 .dot {

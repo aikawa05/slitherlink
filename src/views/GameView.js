@@ -45,7 +45,20 @@ function GameView(props) {
     for (let j = 0; j < props.board.width; j++)
     {
       var n = props.board.getNumber(j, i)
-      cells.push((<div key={"cell" + (i * props.board.width + j)} className={"cell noselect"}>{n === Board.EMPTY ? "" : n}</div>))
+      var m = props.board.countSurroundingLines(j, i)
+      var classNames = ["cell", "noselect"]
+      if (n !== Board.EMPTY)
+      {
+        if (n === m)
+        {
+          classNames.push("cell" + n)
+        }
+        else if (n < m)
+        {
+          classNames.push("celldisabled")
+        }
+      }
+      cells.push((<div key={"cell" + (i * props.board.width + j)} className={classNames.join(" ")}>{n === Board.EMPTY ? "" : n}</div>))
     }
   }
   var dots = []
