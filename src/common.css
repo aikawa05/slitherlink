@@ -152,3 +152,43 @@ body {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+
+.tool-area {
+  position: relative;
+  width: auto;
+  text-align: center;
+}
+
+.tool-back {
+  position: relative;
+  display: inline-block;
+  width: 160px;
+  margin: 10px;
+  padding: 5px;
+  border: 0px;
+  border-radius: 45px;
+  background-color: white;
+}
+
+.tool-item-icon {
+  position: relative;
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+
+.tool-item-icon-pen-on {
+  background-image: url("./images/pen.png");
+}
+.tool-item-icon-pen-off {
+  background-image: url("./images/pen-gray.png");
+}
+.tool-item-icon-eraser-on {
+  background-image: url("./images/eraser.png");
+}
+.tool-item-icon-eraser-off {
+  background-image: url("./images/eraser-gray.png");
+}

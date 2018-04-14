@@ -38,6 +38,17 @@ function dotStyle(x, y)
   }
 }
 
+function onClickTool(toolName) {
+  Actions.selectTool(toolName)
+}
+
+function ToolView(name, selected)
+{
+  return (
+    <a key={"tool-" + name} className={["tool-item-icon", "tool-item-icon-" + name + "-" + (selected ? "on" : "off")].join(" ")} onClick={() => onClickTool(name)}></a>
+  )
+}
+
 function GameView(props) {
   var cells = []
   for (let i = 0; i < props.board.height; i++)
@@ -95,10 +106,18 @@ function GameView(props) {
     }
   }
   return (
-    <div className="board noselect" style={boardStyle(props.board.width, props.board.height)} onMouseDown={onMouseDown.bind(this)} onMouseMove={onMouseMove.bind(this)}>
-      {cells}
-      {dots}
-      {lines}
+    <div>
+      <div className="board noselect" style={boardStyle(props.board.width, props.board.height)} onMouseDown={onMouseDown.bind(this)} onMouseMove={onMouseMove.bind(this)}>
+        {cells}
+        {dots}
+        {lines}
+      </div>
+      <div className="tool-area">
+        <div className="tool-back">
+          {ToolView("pen", props.toolName === "pen")}
+          {ToolView("eraser", props.toolName === "eraser")}
+        </div>
+      </div>
     </div>
   )
 }
