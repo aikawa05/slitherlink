@@ -21,18 +21,16 @@ const Actions = {
       toolName: toolName,
     });
   },
-  mouseDownBoard(position) {
+  drawLine(linePosition) {
     AppDispatcher.dispatch({
-      type: ActionTypes.MOUSE_DOWN_BOARD,
-      x01: position.x01,
-      y01: position.y01
+      type: ActionTypes.DRAW_LINE,
+      linePosition
     });
   },
-  mouseMoveBoard(position) {
+  eraseLine(linePosition) {
     AppDispatcher.dispatch({
-      type: ActionTypes.MOUSE_MOVE_BOARD,
-      x01: position.x01,
-      y01: position.y01
+      type: ActionTypes.ERASE_LINE,
+      linePosition
     });
   },
 };

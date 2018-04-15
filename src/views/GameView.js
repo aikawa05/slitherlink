@@ -3,7 +3,9 @@ import Board from '../models/Board'
 import Actions from '../data/Actions'
 import LineView from './LineView'
 
+var drawing = false
 var mouseDown = 0;
+
 document.body.onmousedown = function() {
     mouseDown = 1;
 }
@@ -93,16 +95,63 @@ function GameView(props) {
   var getPosition01FromMouseEvent = function(e) {
     var rect = e.currentTarget.getBoundingClientRect()
     return {
-      x01: Math.min(1, Math.max(0, (e.clientX - rect.x - 50) / (boardDisplayWidth(props.board.width)))),
-      y01: Math.min(1, Math.max(0, (e.clientY - rect.y - 50) / (boardDisplayHeight(props.board.height)))),
+      x: Math.min(1, Math.max(0, (e.clientX - rect.x - 50) / (boardDisplayWidth(props.board.width)))),
+      y: Math.min(1, Math.max(0, (e.clientY - rect.y - 50) / (boardDisplayHeight(props.board.height)))),
     }
   }
   var onMouseDown = function(e) {
-    Actions.mouseDownBoard(getPosition01FromMouseEvent(e))
+    var position01 = getPosition01FromMouseEvent(e)
+    var linePosition = props.board.convertToLinePosition(position01)
+    if (props.toolName === "pen")
+    {
+      if (props.board.hasLine(linePosition.x, linePosition.y))
+      {
+        Actions.eraseLine(linePosition)
+        drawing = false
+      }
+      else
+      {
+        Actions.drawLine(linePosition)
+        drawing = true
+      }
+    }
+    else if (props.toolName === "eraser")
+    {
+      if (props.board.hasLine(linePosition.x, linePosition.y))
+      {
+        Actions.eraseLine(linePosition)
+        drawing = false
+      }
+    }
   }
   var onMouseMove = function(e) {
+    var position01 = getPosition01FromMouseEvent(e)
+    var linePosition = props.board.convertToLinePosition(position01)
     if (mouseDown) {
-      Actions.mouseMoveBoard(getPosition01FromMouseEvent(e))
+      if (props.toolName === "pen")
+      {
+        if (props.board.hasLine(linePosition.x, linePosition.y))
+        {
+          if (!drawing)
+          {
+            Actions.eraseLine(linePosition)
+          }
+        }
+        else
+        {
+          if (drawing)
+          {
+            Actions.drawLine(linePosition)
+          }
+        }
+      }
+      else if (props.toolName === "eraser")
+      {
+        if (props.board.hasLine(linePosition.x, linePosition.y))
+        {
+          Actions.eraseLine(linePosition)
+        }
+      }
     }
   }
   return (
