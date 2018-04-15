@@ -3,34 +3,28 @@ import ReactDOM from 'react-dom'
 import './reset.css'
 import './common.css'
 import GameContainer from './containers/GameContainer'
-
+import ProblemsContainer from './containers/ProblemsContainer'
 import Actions from './data/Actions'
+import ProblemData from './data/ProblemData'
 
-for (let i = 1; i <= 8; i++)
+var firstProblemId = null
+for (let i = 0; i < ProblemData["problems"].length; i++)
 {
-  Actions.addProblem(i,
-    {
-      hints: 2,
-      width: 3,
-      height: 3,
-      numbers: [
-        4,4,4,
-        4,3,4,
-        4,0,4,
-      ],
-      lines: [
-        1,1,1,0,
-        1,0,0,1,
-        0,1,0,0,
-        1,1,1,1,
-        1,0,1,0,
-        0,0,0,0,
-        0,0,0,0,
-      ],
-    },
-  )
+  let id = i + 1
+  if (firstProblemId == null)
+  {
+    firstProblemId = id
+  }
+  Actions.addProblem(id, ProblemData["problems"][i])
 }
 
-Actions.selectProblem(1)
+Actions.selectProblem(firstProblemId)
 
-ReactDOM.render((<div><header>Slither Link</header><div className="content"><GameContainer /></div></div>), document.getElementById('root'))
+ReactDOM.render((
+  <div>
+    <header>Slither Link</header>
+    <div className="content">
+      <GameContainer />
+      <ProblemsContainer />
+    </div>
+  </div>), document.getElementById('root'))

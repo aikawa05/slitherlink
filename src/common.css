@@ -21,7 +21,7 @@ header {
   position: relative;
   top: 70px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -208,4 +208,48 @@ header {
 }
 .tool-item-icon-eraser-off {
   background-image: url("./images/eraser-gray.png");
+}
+
+.problems {
+  position: relative;
+  width: 512px;
+  padding: 20px;
+  background-color: white;
+  border: 0px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.problem-icon {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 4px solid #386cb0;
+  border-radius: 10px;
+  color: #386cb0;
+  line-height: 50px;
+  font-size: 36px;
+  margin: 3px;
+  text-align: center;
+}
+
+.problems > .title {
+  position: relative;
+  width: 100%;
+  margin: 10px;
+  margin-top: 20px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.problems > .easy {
+  color: #148776;
+}
+
+.problems > .normal {
+  color: #d78111;
+}
+
+.problems > .hard {
+  color: #d92f44;
 }
