@@ -16,27 +16,63 @@ document.body.onmouseleave = function() {
     mouseDown = 0;
 }
 
-function boardDisplayWidth(boardWidth) {
-  return 110 * boardWidth
+function boardScreenWidth(boardWidth)
+{
+  if (boardWidth < 5) {
+    return 320.0
+  }
+  else {
+    return 480.0
+  }
 }
 
-function boardDisplayHeight(boardHeight) {
-  return 110 * boardHeight
+function boardScreenHeight(boardWidth, boardHeight)
+{
+  return boardScreenWidth(boardWidth, boardHeight) * boardHeight / boardWidth
+}
+
+function cellScreenSize(boardWidth)
+{
+  return boardScreenWidth(boardWidth) / boardWidth * 0.9
+}
+
+function cellStyle(boardWidth)
+{
+  var cellSize = cellScreenSize(boardWidth)
+  return {
+    width: cellSize,
+    height: cellSize,
+    lineHeight: `${cellSize}px`,
+    margin: Math.round(cellSize * 0.05),
+    fontSize: cellSize * 0.9,
+  }
 }
 
 function boardStyle(boardWidth, boardHeight)
 {
   return {
-    width: boardDisplayWidth(boardWidth),
-    height: boardDisplayHeight(boardHeight),
+    width: boardScreenWidth(boardWidth),
+    height: boardScreenHeight(boardWidth, boardHeight),
+    padding: cellScreenSize(boardWidth) * 0.5,
   }
 }
 
-function dotStyle(x, y)
+function dotStyle(boardWidth, x, y)
 {
+  var cell = cellStyle(boardWidth)
+  var size = Math.floor(cell.width * 0.1)
+  if (size % 2 === 1)
+  {
+    size += 1
+  }
   return {
-    left: 110 * x + 45,
-    top: 110 * y + 45,
+    left: (cell.width + cell.margin * 2.0) * x + cell.width * 0.5 - size / 2 ,
+    top: (cell.height + cell.margin * 2.0) * y + cell.height * 0.5 - size / 2,
+    width: size,
+    height: size,
+    MozBorderRadius: size / 2,
+    WebkitBorderRadius: size / 2,
+    borderRadius: size / 2,
   }
 }
 
@@ -71,7 +107,7 @@ function GameView(props) {
           classNames.push("celldisabled")
         }
       }
-      cells.push((<div key={"cell" + (i * props.board.width + j)} className={classNames.join(" ")}>{n === Board.EMPTY ? "" : n}</div>))
+      cells.push((<div key={"cell" + (i * props.board.width + j)} className={classNames.join(" ")} style={cellStyle(props.board.width)}>{n === Board.EMPTY ? "" : n}</div>))
     }
   }
   var dots = []
@@ -86,17 +122,18 @@ function GameView(props) {
         props.board.hasLine(j, i * 2),
         props.board.hasLine(j, i * 2 + 1),
       ]
-      dots.push(LineView("lineView" + (i * props.board.lineWidth + j), j, i, surroundingLines))
+      dots.push(LineView("lineView" + (i * props.board.lineWidth + j), j, i, surroundingLines, cellStyle(props.board.width)))
       if (surroundingLines.every(_hasLine => !_hasLine)){
-        dots.push((<div key={"dot" + (i * (props.board.width + 1) + j)} className="dot noselect" style={dotStyle(j, i)}></div>))
+        dots.push((<div key={"dot" + (i * (props.board.width + 1) + j)} className="dot noselect" style={dotStyle(props.board.width, j, i)}></div>))
       }
     }
   }
   var getPosition01FromMouseEvent = function(e) {
     var rect = e.currentTarget.getBoundingClientRect()
+    var bStyle = boardStyle(props.board.width, props.board.height)
     return {
-      x: Math.min(1, Math.max(0, (e.clientX - rect.x - 50) / (boardDisplayWidth(props.board.width)))),
-      y: Math.min(1, Math.max(0, (e.clientY - rect.y - 50) / (boardDisplayHeight(props.board.height)))),
+      x: Math.min(1, Math.max(0, (e.clientX - rect.x - bStyle.padding) / bStyle.width)),
+      y: Math.min(1, Math.max(0, (e.clientY - rect.y - bStyle.padding) / bStyle.height)),
     }
   }
   var onMouseDown = function(e) {

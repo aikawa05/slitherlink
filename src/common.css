@@ -30,7 +30,6 @@ header {
 .board {
   position: relative;
   background-color: white;
-  padding: 50px;
   border: 1px solid #eeeeee;
   border-radius: 5px;
 }
@@ -38,13 +37,7 @@ header {
 .cell {
   background-color: white;
   color: #aaaaaa;
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
-  margin: 5px;
-  border-radius: 7px;
   display: inline-block;
-  font-size: 90px;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
@@ -73,92 +66,18 @@ header {
 .dot {
   position: absolute;
   background-color: #aaaaaa;
-  width: 10px;
-  height: 10px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
 }
 
 .lineGroup {
   position: absolute;
-  width: 100px;
-  height: 100px;
 }
 
 .linePart {
   position: absolute;
-  width: 50px;
-  height: 50px;
 }
 
 .linePartCenter {
   position: absolute;
-  width: 14px;
-  height: 14px;
-  left: 43px;
-  top: 43px;
-  background-color: #4d619a;
-}
-
-.linePart1 {
-  left: -7px;
-  top: -7px;
-}
-
-.linePart2 {
-  right: -7px;
-  top: -7px;
-}
-
-.linePart3 {
-  right: -7px;
-  bottom: -7px;
-}
-
-.linePart4 {
-  left: -7px;
-  bottom: -7px;
-}
-
-.linePart1-1 {
-  border-bottom: 14px solid #4d619a;
-}
-
-.linePart1-2 {
-  border-right: 14px solid #4d619a;
-  border-bottom: 14px solid #4d619a;
-  border-radius: 0 0 28px 0;
-}
-
-.linePart2-1 {
-  border-left: 14px solid #4d619a;
-}
-
-.linePart2-2 {
-  border-left: 14px solid #4d619a;
-  border-bottom: 14px solid #4d619a;
-  border-radius: 0 0 0 28px;
-}
-
-.linePart3-1 {
-  border-top: 14px solid #4d619a;
-}
-
-.linePart3-2 {
-  border-left: 14px solid #4d619a;
-  border-top: 14px solid #4d619a;
-  border-radius: 28px 0 0 0;
-}
-
-.linePart4-1 {
-  border-right: 14px solid #4d619a;
-}
-
-.linePart4-2 {
-  border-right: 14px solid #4d619a;
-  border-top: 14px solid #4d619a;
-  border-radius: 0 28px 0 0;
 }
 
 .noselect {
