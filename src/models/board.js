@@ -118,6 +118,13 @@ class Board {
   convertToLinePosition(x01, y01) {
     var x = this.width * x01
     var y = this.height * y01
+
+    // 点の周囲では操作性が悪くなるので入力しない
+    if (Math.abs(x - Math.round(x)) < 0.1 && Math.abs(y - Math.round(y)) < 0.1)
+    {
+      return {x: -1, y: -1}
+    }
+
     var a = Math.floor(x + y)
     var b = Math.ceil(y - x)
     var i = Math.floor(((a + b) / 2.0) * 2.0)
