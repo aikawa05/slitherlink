@@ -33,4 +33,4 @@ for (let i = 1; i <= 8; i++)
 
 Actions.selectProblem(1)
 
-ReactDOM.render((<GameContainer />), document.getElementById('root'))
+ReactDOM.render((<div><header>Slither Link</header><div className="content"><GameContainer /></div></div>), document.getElementById('root'))
