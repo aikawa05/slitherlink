@@ -3,7 +3,6 @@ import AppDispatcher from './AppDispatcher'
 import ActionTypes from './ActionTypes'
 import Board from '../models/Board'
 import ProblemStore from './ProblemStore'
-import GameDataStore from './GameDataStore'
 
 class BoardStore extends ReduceStore {
   constructor() {
@@ -19,13 +18,9 @@ class BoardStore extends ReduceStore {
       case ActionTypes.SELECT_PROBLEM:
         return new Board(ProblemStore.getProblem(action.problemId))
       case ActionTypes.DRAW_LINE:
-      {
         return state.setLine(action.linePosition.x, action.linePosition.y)
-      }
       case ActionTypes.ERASE_LINE:
-      {
         return state.removeLine(action.linePosition.x, action.linePosition.y)
-      }
       default:
         return state
     }

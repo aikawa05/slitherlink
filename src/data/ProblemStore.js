@@ -2,8 +2,9 @@ import Immutable from 'immutable'
 import {ReduceStore} from 'flux/utils'
 import AppDispatcher from './AppDispatcher'
 import ActionTypes from './ActionTypes'
-import Problem from '../models/Problem'
 import ProblemData from './ProblemData'
+import BoardStore from './BoardStore'
+import Problem from '../models/Problem'
 
 class ProblemStore extends ReduceStore {
   constructor() {
@@ -14,14 +15,28 @@ class ProblemStore extends ReduceStore {
     var state = Immutable.OrderedMap()
     for (let i = 0; i < ProblemData["problems"].length; i++)
     {
-      let id = i + 1
-      state = state.set(id, new Problem(id, ProblemData["problems"][i]));
+      var id = i + 1
+      var data = ProblemData["problems"][i]
+      state = state.set(id, new Problem(id, Immutable.OrderedMap({
+        id: id,
+        hints: data.hints,
+        width: data.width,
+        height: data.height,
+        numbers: Immutable.List(data.numbers),
+        lines: Immutable.List(data.lines),
+        currentLines: Immutable.List(),
+        cleared: false })));
     }
     return state
   }
 
   reduce(state, action) {
     switch (action.type) {
+      case ActionTypes.DRAW_LINE:
+      case ActionTypes.ERASE_LINE:
+        AppDispatcher.waitFor([BoardStore.getDispatchToken()])
+        var problem = BoardStore.getState().problem
+        return state.set(problem.id, problem)
       default:
         return state
     }

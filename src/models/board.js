@@ -7,37 +7,24 @@ class Board {
       return
     }
     this.problem = problem
-    var __numbers = []
-    for (let i = 0; i < problem.height; i++) {
-      for (let j = 0; j < problem.width; j++) {
-        if (problem.numbers) {
-          __numbers.push(problem.numbers[i * problem.width + j])
-        }
-        else {
-          __numbers.push(Board.EMPTY)
+    if (!this.problem.currentLines || this.problem.currentLines.size === 0)
+    {
+      var __lines = []
+      for (let i = 0; i < this.lineHeight; i++) {
+        for (let j = 0; j < this.lineWidth; j++) {
+          __lines.push(0)
         }
       }
+      this.problem = this.problem.set("currentLines", List(__lines))
     }
-    var __lines = []
-    for (let i = 0; i < this.lineHeight; i++) {
-      for (let j = 0; j < this.lineWidth; j++) {
-        __lines.push(0)
-      }
-    }
-    this._numbers = List(__numbers)
-    this._lines = List(__lines)
   }
 
   _copy() {
-    var b = new Board()
-    b.problem = this.problem
-    b._numbers = this._numbers
-    b._lines = this._lines
-    return b
+    return new Board(this.problem)
   }
 
   get inited() {
-    return this.problem != null
+    return !!this.problem
   }
   get width() {
     return this.inited ? this.problem.width : 0
@@ -53,7 +40,7 @@ class Board {
   }
   hasAnswerLine(x, y) {
     if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight ) {
-      return this.problem.lines[y * this.lineWidth + x] === 1
+      return this.problem.lines.get(this.lineIndex(x, y)) === 1
     }
     else {
       return false
@@ -66,11 +53,12 @@ class Board {
     return y * this.lineWidth + x
   }
   getNumber(x, y) {
-    return this._numbers.get(this.numberIndex(x, y))
+    return this.problem.numbers.get(this.numberIndex(x, y))
   }
   removeLine(x, y) {
-    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight && this._lines.get(this.lineIndex(x, y)) === 1 ) {
-      this._lines = this._lines.set(this.lineIndex(x, y), 0)
+    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight && this.problem.currentLines.get(this.lineIndex(x, y)) === 1 ) {
+      this.problem = this.problem.set("currentLines", this.problem.currentLines.set(this.lineIndex(x, y), 0))
+      this.problem = this.problem.set("cleared", this.isCleared())
       return this._copy()
     }
     else {
@@ -78,8 +66,9 @@ class Board {
     }
   }
   setLine(x, y) {
-    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight && this._lines.get(this.lineIndex(x, y)) === 0) {
-      this._lines = this._lines.set(this.lineIndex(x, y), 1)
+    if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight && this.problem.currentLines.get(this.lineIndex(x, y)) === 0) {
+      this.problem = this.problem.set("currentLines", this.problem.currentLines.set(this.lineIndex(x, y), 1))
+      this.problem = this.problem.set("cleared", this.isCleared())
       return this._copy()
     }
     else {
@@ -88,7 +77,7 @@ class Board {
   }
   hasLine(x, y) {
     if (0 <= x && x < this.lineWidth && 0 <= y && y < this.lineHeight ) {
-      return this._lines.get(this.lineIndex(x, y)) === 1
+      return this.problem.currentLines.get(this.lineIndex(x, y)) === 1
     }
     else {
       return false
@@ -141,6 +130,18 @@ class Board {
       j += 1
     }
     return {x: j, y: i}
+  }
+
+  isCleared() {
+    for (let i = 0; i < this.lineHeight; i++) {
+      for (let j = 0; j < this.lineWidth; j++) {
+        if (this.hasLine(j, i) !== this.hasAnswerLine(j, i))
+        {
+          return false
+        }
+      }
+    }
+    return true
   }
 
   static get EMPTY() {
