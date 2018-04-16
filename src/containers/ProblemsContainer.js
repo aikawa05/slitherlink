@@ -13,7 +13,6 @@ function getStores() {
 function getState() {
   return {
     problems: ProblemStore.getState(),
-    // toolName: GameDataStore.getState(),
   }
 }
 

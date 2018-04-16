@@ -3,6 +3,7 @@ import {ReduceStore} from 'flux/utils'
 import AppDispatcher from './AppDispatcher'
 import ActionTypes from './ActionTypes'
 import Problem from '../models/Problem'
+import ProblemData from './ProblemData'
 
 class ProblemStore extends ReduceStore {
   constructor() {
@@ -10,13 +11,17 @@ class ProblemStore extends ReduceStore {
   }
 
   getInitialState() {
-    return Immutable.OrderedMap()
+    var state = Immutable.OrderedMap()
+    for (let i = 0; i < ProblemData["problems"].length; i++)
+    {
+      let id = i + 1
+      state = state.set(id, new Problem(id, ProblemData["problems"][i]));
+    }
+    return state
   }
 
   reduce(state, action) {
     switch (action.type) {
-      case ActionTypes.ADD_PROBLEM:
-        return state.set(action.problemId, new Problem(action.problemId, action.problemData));
       default:
         return state
     }

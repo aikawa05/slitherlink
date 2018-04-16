@@ -5,20 +5,8 @@ import './common.css'
 import GameContainer from './containers/GameContainer'
 import ProblemsContainer from './containers/ProblemsContainer'
 import Actions from './data/Actions'
-import ProblemData from './data/ProblemData'
 
-var firstProblemId = null
-for (let i = 0; i < ProblemData["problems"].length; i++)
-{
-  let id = i + 1
-  if (firstProblemId == null)
-  {
-    firstProblemId = id
-  }
-  Actions.addProblem(id, ProblemData["problems"][i])
-}
-
-Actions.selectProblem(firstProblemId)
+Actions.selectProblem(1)
 
 ReactDOM.render((
   <div>
