@@ -11,7 +11,19 @@ function ProblemsView(props)
   var problems = []
   var index = 0
   props.problems.forEach((problem, id) => {
-    problems.push((<a key={"problem" + index} className="problem-icon" onClick={() => selectProblem(problem.id)}>{problem.id}</a>))
+    var items = []
+    items.push((<div key="number" className="number noselect">{problem.id}</div>))
+    if (problem.cleared)
+    {
+      items.push((<div key="cleared" className="cleared"></div>))
+    }
+    problems.push((
+      <a key={"problem" + index} className="problem-icon" onClick={() => selectProblem(problem.id)}>
+        <div className="box">
+          {items}
+        </div>
+      </a>
+    ))
     index += 1
   })
   return (
