@@ -12,5 +12,13 @@ ReactDOM.render((
     <div className="content">
       <GameContainer />
       <ProblemsContainer />
+      <div className="description">
+        <p>遊び方</p>
+        <p>・数字の数だけ線が触れるようにする</p>
+        <p>・１つのループを作る</p>
+        <br/>
+        <p><a href="http://aikawa05.github.com/slitherlink">ソースコード（GitHub）</a></p>
+      </div>
     </div>
+    <footer></footer>
   </div>), document.getElementById('root'))

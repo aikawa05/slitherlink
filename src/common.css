@@ -1,13 +1,12 @@
 body {
   font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
-  font-size: 21px;
+  font-size: 14px;
+  line-height: 20px;
   background-color: #eeeeee;
 }
 
 header {
-  position: absolute;
-  top: 0px;
-  left: 0px;
+  position: relative;
   width: 100%;
   height: 50px;
   background-color: #333333;
@@ -17,9 +16,21 @@ header {
   font-size: 26px;
 }
 
+footer {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: #333333;
+  color: white;
+  margin-top: 40px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 26px;
+}
+
 .content {
   position: relative;
-  top: 70px;
+  top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -210,4 +221,16 @@ header {
 
 .problems > .hard {
   color: #d92f44;
+}
+
+.description {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  position: relative;
+  display: block;
+  width: 512px;
+  padding: 20px;
+  background-color: white;
+  border: 0px;
+  border-radius: 5px;
+  margin-top: 10px;
 }
