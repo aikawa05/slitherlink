@@ -20,5 +20,5 @@ ReactDOM.render((
         <p><a href="http://aikawa05.github.com/slitherlink">ソースコード（GitHub）</a></p>
       </div>
     </div>
-    <footer></footer>
+    <footer>&copy; ishikawa</footer>
   </div>), document.getElementById('root'))
