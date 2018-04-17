@@ -2,7 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ReactとFluxによるSlitherlinkの実装です。
 [こちら](http://aikawa05.github.io/slitherlink)でプレイできます。
+
 問題はオリジナルで以前スマホアプリとして出していたものと同じです。
+
 Hardの最後の方は結構難しいです。
 
 ### Wikipedia
