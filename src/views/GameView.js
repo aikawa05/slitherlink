@@ -22,7 +22,7 @@ function boardScreenWidth(boardWidth)
     return 320.0
   }
   else {
-    return 480.0
+    return 380.0
   }
 }
 
