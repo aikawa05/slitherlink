@@ -193,6 +193,7 @@ function GameView(props) {
   }
   return (
     <div>
+      {props.board.problem.cleared ? (<div className="clear-wrapper"><div className="clear">CLEAR!</div></div>) : (<div></div>)}
       <div className="board noselect" style={boardStyle(props.board.width, props.board.height)} onMouseDown={onMouseDown.bind(this)} onMouseMove={onMouseMove.bind(this)}>
         {cells}
         {dots}
