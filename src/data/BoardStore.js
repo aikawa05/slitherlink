@@ -3,6 +3,9 @@ import AppDispatcher from './AppDispatcher'
 import ActionTypes from './ActionTypes'
 import Board from '../models/Board'
 import ProblemStore from './ProblemStore'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class BoardStore extends ReduceStore {
   constructor() {
@@ -10,7 +13,7 @@ class BoardStore extends ReduceStore {
   }
 
   getInitialState() {
-    return new Board()
+    return new Board(ProblemStore.getProblem(Number(cookies.get("currentProblemId") || 1)))
   }
 
   reduce(state, action) {

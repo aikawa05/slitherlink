@@ -165,11 +165,19 @@ header {
   top: 3px;
 }
 
+.problem-icon > .box-selected {
+  background-color: #386cb0;
+}
+
 .problem-icon > .box > .number {
   position: relative;
   display: block;
   text-align: center;
   color: #386cb0;
+}
+
+.problem-icon > .box > .number-selected {
+  color: white;
 }
 
 .problem-icon > .box > .cleared {

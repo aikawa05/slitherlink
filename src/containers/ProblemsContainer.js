@@ -13,7 +13,7 @@ function getStores() {
 function getState() {
   return {
     problems: ProblemStore.getState(),
-    currentProblemId: GameDataStore.getState().problemId
+    currentProblemId: GameDataStore.getState().get("problemId")
   }
 }
 

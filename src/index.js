@@ -6,8 +6,6 @@ import GameContainer from './containers/GameContainer'
 import ProblemsContainer from './containers/ProblemsContainer'
 import Actions from './data/Actions'
 
-Actions.selectProblem(1)
-
 ReactDOM.render((
   <div>
     <header>Slither Link</header>

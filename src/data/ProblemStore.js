@@ -5,6 +5,9 @@ import ActionTypes from './ActionTypes'
 import ProblemData from './ProblemData'
 import BoardStore from './BoardStore'
 import Problem from '../models/Problem'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class ProblemStore extends ReduceStore {
   constructor() {
@@ -17,6 +20,9 @@ class ProblemStore extends ReduceStore {
     {
       var id = i + 1
       var data = ProblemData["problems"][i]
+      var savedData = cookies.get("p" + id) || {}
+      var currentLines = savedData["lines"] || []
+      var cleared = savedData["cleared"] || false
       state = state.set(id, new Problem(id, Immutable.OrderedMap({
         id: id,
         hints: data.hints,
@@ -24,8 +30,8 @@ class ProblemStore extends ReduceStore {
         height: data.height,
         numbers: Immutable.List(data.numbers),
         lines: Immutable.List(data.lines),
-        currentLines: Immutable.List(),
-        cleared: false })));
+        currentLines: Immutable.List(currentLines),
+        cleared: cleared })));
     }
     return state
   }
@@ -36,6 +42,10 @@ class ProblemStore extends ReduceStore {
       case ActionTypes.ERASE_LINE:
         AppDispatcher.waitFor([BoardStore.getDispatchToken()])
         var problem = BoardStore.getState().problem
+        if (state.get(problem.id) !== problem)
+        {
+          cookies.set("p" + problem.id, {lines: problem.currentLines, cleared: problem.cleared})
+        }
         return state.set(problem.id, problem)
       default:
         return state

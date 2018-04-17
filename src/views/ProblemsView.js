@@ -12,14 +12,14 @@ function ProblemsView(props)
   var index = 0
   props.problems.forEach((problem, id) => {
     var items = []
-    items.push((<div key="number" className="number noselect">{problem.id}</div>))
+    items.push((<div key="number" className={(props.currentProblemId === id ? "number number-selected" : "number") + " noselect"}>{problem.id}</div>))
     if (problem.cleared)
     {
       items.push((<div key="cleared" className="cleared"></div>))
     }
     problems.push((
       <a key={"problem" + index} className="problem-icon" onClick={() => selectProblem(problem.id)}>
-        <div className="box">
+        <div className={props.currentProblemId === id ? "box box-selected" : "box"}>
           {items}
         </div>
       </a>
